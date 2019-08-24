@@ -55,51 +55,46 @@ fn lex(path: &str) {
 
         for capture in OPEN_BRACE.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total open brace count: {}", &(capture.len().to_string()));
         }
 
         for capture in CLOSE_BRACE.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total close brace count: {}", &(capture.len().to_string()));
         }
 
         for capture in OPEN_PARENTHESIS.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total close brace count: {}", &(capture.len().to_string()));
         }
 
         for capture in CLOSE_PARENTHESIS.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total open parenthesis count: {}", &(capture.len().to_string()));
         }
 
         for capture in SEMICOLON.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total semicolon count: {}", &(capture.len().to_string()));
         }
 
         for capture in INTEGER_KEYWORD.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total integer keyword count: {}", &(capture.len().to_string()));
         }
 
         for capture in RETURN_KEYWORD.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total integer count: {}", &(capture.len().to_string()));
         }
 
         for capture in IDENTIFIER.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total integer count: {}", &(capture.len().to_string()));
         }
         
          for capture in INTEGER_LITERAL.captures_iter(&file) {
             tokens.push(capture[0].to_string());
-            println!("Total integer count: {}", &(capture.len().to_string()));
         }
 
         println!("{:?}", tokens);
 
+    }
+
+    fn parse() {
+        
     }
 
 }
