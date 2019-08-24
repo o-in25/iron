@@ -5,12 +5,14 @@ extern crate regex;
 // process's environment.
 // use std::env;
 // standard i/o
-//use std::io;
+// use std::io;
+
 // use the file system
 use std::fs;
 // regular expressions
 use regex::Regex;
-
+// vectors
+use std::vec::Vec;
 
 // function that accepts a file and returns 
 // a list of tokens
@@ -24,6 +26,10 @@ fn main() {
 fn lex(path: &str) {
     let file = fs::read_to_string(path).expect("Error parsing file.");
     if !file.is_empty() {
+        // the list of tokens tha the
+        // lexer will find
+        let mut tokens: Vec<String> = Vec::new();
+
         // compile the regexes only once
         // so that they can be reused 
         lazy_static! {
@@ -48,12 +54,52 @@ fn lex(path: &str) {
         }
 
         for capture in OPEN_BRACE.captures_iter(&file) {
-            println!("Openbrace: {}", &capture[0]);
+            tokens.push(capture[0].to_string());
+            println!("Total open brace count: {}", &(capture.len().to_string()));
         }
 
+        for capture in CLOSE_BRACE.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total close brace count: {}", &(capture.len().to_string()));
+        }
+
+        for capture in OPEN_PARENTHESIS.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total close brace count: {}", &(capture.len().to_string()));
+        }
+
+        for capture in CLOSE_PARENTHESIS.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total open parenthesis count: {}", &(capture.len().to_string()));
+        }
+
+        for capture in SEMICOLON.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total semicolon count: {}", &(capture.len().to_string()));
+        }
+
+        for capture in INTEGER_KEYWORD.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total integer keyword count: {}", &(capture.len().to_string()));
+        }
+
+        for capture in RETURN_KEYWORD.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total integer count: {}", &(capture.len().to_string()));
+        }
+
+        for capture in IDENTIFIER.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total integer count: {}", &(capture.len().to_string()));
+        }
+        
+         for capture in INTEGER_LITERAL.captures_iter(&file) {
+            tokens.push(capture[0].to_string());
+            println!("Total integer count: {}", &(capture.len().to_string()));
+        }
+
+        println!("{:?}", tokens);
 
     }
-
-
 
 }
