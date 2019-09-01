@@ -28,11 +28,14 @@ fn main() {
 fn read_from_file(path: &str) {
     let file = fs::read_to_string(path).expect("Error parsing file.");
     if !file.is_empty() {
-        let vec: Vec<&str> = file.split_whitespace().collect();
+        let text: Vec<&str> = file.split_whitespace().collect();
+        let mut tokens = vec![];
         // now that we have split the prospective
         // tokens by the white space, time to
         // parse the strings
-        lexer::test();
+        for index in text.into_iter() {
+            tokens.push(lexer::next(index));
+        }
 
     }
 }

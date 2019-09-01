@@ -8,15 +8,15 @@ use regex::Regex;
 use std::vec::Vec;
 
 pub enum NameT {
-    OPEN_BRACE,
-    CLOSE_BRACE,
-    OPEN_PARENTHESIS,
-    CLOSE_PARENTHESIS,
-    SEMICOLON,
-    INTEGER_KEYWORD,
-    RETURN_KEYWORD,
-    IDENTIFIER,
-    INTEGER_LITERAL
+    OpenBrace,
+    CloseBrace,
+    OpenParenthesis,
+    CloseParenthesis,
+    Semicolon,
+    IntegerKeyword,
+    ReturnKeyword,
+    Identifier,
+    IntegerLiteral
 }
 
 pub struct TokenT<'a> {
@@ -24,14 +24,12 @@ pub struct TokenT<'a> {
     value: &'a str
 }
 
-pub fn parse(sequence: &str) -> TokenT {
-    let t = TokenT {
-        name: NameT::RBRACE,
-        value: "10"
-    };
+// gets the next token
+// in the sequence
+pub fn next(sequence: &str) -> TokenT {
     lazy_static! {
             // an opened brace
-            static ref OPEN_BRACE: Regex = Regex::new("}").unwrap();
+            static ref OPEN_BRACE: Regex = Regex::new("{").unwrap();
             // a closed brace
             static ref CLOSE_BRACE: Regex = Regex::new("}").unwrap();
             // an opened parenthesis
@@ -50,6 +48,77 @@ pub fn parse(sequence: &str) -> TokenT {
             static ref INTEGER_LITERAL: Regex = Regex::new("[0-9]+").unwrap();
     }
 
+    match sequence {
+        sequence if OPEN_BRACE.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: "{"
+            };
+            return t;
+        }
+        sequence if CLOSE_BRACE.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: "}"
+            };
+            return t;
+        }
+        sequence if OPEN_PARENTHESIS.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: "("
+            };
+            return t;
+        }
+        sequence if CLOSE_PARENTHESIS.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: ")"
+            };
+            return t;
+        }
+        sequence if SEMICOLON.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: ";"
+            };
+            return t;
+        }
+        sequence if INTEGER_KEYWORD.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: "int"
+            };
+            return t;
+        }
+        sequence if RETURN_KEYWORD.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: "return"
+            };
+            return t;
+        }
+        sequence if IDENTIFIER.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: sequence
+            };
+            return t;
+        }
+        sequence if INTEGER_LITERAL.is_match(sequence) => {
+            let t = TokenT {
+                name: NameT::OpenBrace,
+                value: sequence
+            };
+            return t;
+        }
+        _ => {}
+    }
+
+    let t = TokenT {
+        name: NameT::OpenBrace,
+        value: ""
+    };
     return t;
 
 }
